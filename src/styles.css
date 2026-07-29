@@ -149,5 +149,39 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
   }
 }
+
+@utility text-ember {
+  background-image: var(--gradient-ember);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-ember {
+  background-image: var(--gradient-ember);
+}
+
+@utility shadow-ember {
+  box-shadow: var(--shadow-ember);
+}
+
+@utility arabic {
+  font-family: var(--font-arabic);
+  direction: rtl;
+}
+
+@utility hairline-grid {
+  background-image:
+    repeating-linear-gradient(90deg, var(--grain-line) 0 1px, transparent 1px 88px),
+    repeating-linear-gradient(0deg, var(--grain-line) 0 1px, transparent 1px 88px);
+}
+
