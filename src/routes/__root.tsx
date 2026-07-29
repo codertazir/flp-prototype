@@ -77,12 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FLP فلب — Smash Burgers in Al Jubail" },
+      { title: "FLP — Smash Burgers in Al Jubail" },
       {
         name: "description",
-        content: "FLP فلب serves smash burgers, crispy chicken and loaded fries in Al Jubail until 3 AM.",
+        content: "FLP serves smash burgers, crispy chicken and loaded fries in Al Jubail until 3 AM.",
       },
-      { property: "og:site_name", content: "FLP فلب" },
+      { property: "og:site_name", content: "FLP" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
