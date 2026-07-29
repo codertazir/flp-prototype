@@ -1,26 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Instagram, Phone, MapPin, Clock, Star } from "lucide-react";
+import { Instagram, Phone, MapPin, Clock, Truck, Store, Smartphone, Beef, Users, UtensilsCrossed } from "lucide-react";
 
-import heroBurger from "@/assets/hero-burger.jpg";
+import flpLogo from "@/assets/flp-logo.png";
+import heroTray from "@/assets/hero-tray.jpg";
+import brandCup from "@/assets/brand-cup.jpg";
+import brandSando from "@/assets/brand-sando.jpg";
+import brandSoftserve from "@/assets/brand-softserve.jpg";
 import menuClassic from "@/assets/menu-classic.jpg";
-import menuChicken from "@/assets/menu-chicken.jpg";
-import menuFries from "@/assets/menu-fries.jpg";
-import menuShake from "@/assets/menu-shake.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "FLP فلب — Smash Burgers in Al Jubail, Open till 3 AM" },
+      { title: "FLP فلب — Flip Your Mood | Burgers in Jubail, Dammam & Al-Baha" },
       {
         name: "description",
         content:
-          "FLP فلب is a burger joint in Al Jubail, Saudi Arabia. Smash burgers, crispy chicken, loaded fries and thick shakes. Open daily 11 AM to 3 AM.",
+          "FLP فلب — flip your mood. Smash burgers, crispy chicken, loaded fries and soft serve. Branches in Jubail, Dammam and Al-Baha. Open till 3 AM.",
       },
-      { property: "og:title", content: "FLP فلب — Smash Burgers in Al Jubail" },
+      { property: "og:title", content: "FLP فلب — Flip Your Mood" },
       {
         property: "og:description",
-        content: "Smash burgers, crispy chicken and loaded fries in Al Jubail. Open daily 11 AM – 3 AM.",
+        content: "Burgers, fries and soft serve in Jubail, Dammam and Al-Baha. Open daily till 3 AM.",
       },
       { property: "og:type", content: "restaurant" },
       { property: "og:url", content: "/" },
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "Restaurant",
           name: "FLP فلب",
+          slogan: "Flip your mood!",
           servesCuisine: "Burgers",
           telephone: "+966597115868",
           address: {
@@ -44,162 +46,196 @@ export const Route = createFileRoute("/")({
           },
           openingHours: "Mo-Su 11:00-03:00",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.4", bestRating: "5" },
-          sameAs: ["https://instagram.com/flp.burger"],
+          sameAs: ["https://instagram.com/flp.burger", "https://linktr.ee/flp.burger"],
         }),
       },
     ],
   }),
 });
 
+const HIGHLIGHTS = [
+  { icon: Store, label: "Branches" },
+  { icon: Clock, label: "Working hours" },
+  { icon: Truck, label: "Delivery" },
+  { icon: Smartphone, label: "Our app" },
+  { icon: Beef, label: "Meat sourcing" },
+  { icon: Users, label: "Friends" },
+  { icon: UtensilsCrossed, label: "Menu" },
+];
+
 const MENU = [
   {
-    name: "FLP Double Smash",
-    ar: "دبل سماش",
-    desc: "Two seared beef patties, double cheddar, pickles, onion, FLP sauce.",
+    name: "FLP Burger",
+    ar: "برجر فلب",
+    desc: "Sesame bun, seared beef, cheese, pickles and the FLP sauce.",
     price: "28",
     img: menuClassic,
+    tone: "bg-primary",
   },
   {
-    name: "Fire Chicken",
-    ar: "دجاج حار",
-    desc: "Buttermilk crispy chicken, jalapeño, hot honey, slaw.",
+    name: "Crispy Sando",
+    ar: "ساندو مقرمش",
+    desc: "Long sesame roll packed with buttermilk-crisp chicken.",
     price: "26",
-    img: menuChicken,
+    img: brandSando,
+    tone: "bg-[oklch(0.86_0.16_92)]",
   },
   {
-    name: "Loaded Cheese Fries",
-    ar: "بطاطس بالجبن",
-    desc: "Golden fries drowned in molten cheese sauce and smoked spice.",
-    price: "16",
-    img: menuFries,
+    name: "FLP Cooler",
+    ar: "مشروب فلب",
+    desc: "Ice-cold citrus cooler in the orange cup you already know.",
+    price: "12",
+    img: brandCup,
+    tone: "bg-[oklch(0.75_0.14_225)]",
   },
   {
-    name: "Thick Shake",
-    ar: "ميلك شيك",
-    desc: "Chocolate, vanilla or Lotus. Spoon-thick, always cold.",
-    price: "18",
-    img: menuShake,
+    name: "Soft Serve",
+    ar: "آيس كريم",
+    desc: "Swirled mango-orange soft serve, served straight from the machine.",
+    price: "14",
+    img: brandSoftserve,
+    tone: "bg-[oklch(0.9_0.09_85)]",
   },
+];
+
+const BRANCHES = [
+  { city: "Jubail", ar: "الجبيل", note: "الفيحاء، الدفي · 35811", map: "https://maps.app.goo.gl/y6gakeGN2dEkSUhH8" },
+  { city: "Dammam", ar: "الدمام", note: "Now serving" },
+  { city: "Al-Baha", ar: "الباحة", note: "Now serving" },
 ];
 
 function Index() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-          <a href="#top" className="flex items-baseline gap-2">
-            <span className="font-display text-3xl leading-none tracking-widest text-ember">FLP</span>
+      <header className="fixed inset-x-0 top-0 z-50 bg-background/90 backdrop-blur">
+        <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-5">
+          <a href="#top" className="flex items-center gap-3">
+            <img src={flpLogo} alt="FLP logo" width={816} height={816} className="h-11 w-11" />
             <span className="arabic text-lg font-bold text-muted-foreground">فلب</span>
           </a>
-          <nav className="hidden gap-8 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground md:flex">
-            <a href="#menu" className="transition-colors hover:text-foreground">
+          <nav className="hidden gap-8 text-sm font-semibold text-muted-foreground md:flex">
+            <a href="#menu" className="transition-colors hover:text-primary">
               Menu
             </a>
-            <a href="#story" className="transition-colors hover:text-foreground">
-              Story
+            <a href="#branches" className="transition-colors hover:text-primary">
+              Branches
             </a>
-            <a href="#visit" className="transition-colors hover:text-foreground">
-              Visit
+            <a href="#visit" className="transition-colors hover:text-primary">
+              Contact
             </a>
           </nav>
           <a
-            href="tel:+966597115868"
-            className="rounded-sm bg-ember px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-ember transition-transform hover:scale-[1.03]"
+            href="https://linktr.ee/flp.burger"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-105"
           >
-            Order
+            Order now
           </a>
         </div>
       </header>
 
-      <main id="top">
+      <main id="top" className="pt-18">
         {/* Hero */}
-        <section className="relative overflow-hidden pt-16">
-          <div className="hairline-grid absolute inset-0 opacity-70" aria-hidden="true" />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:py-24">
-            <div>
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-                <Star className="h-3.5 w-3.5 fill-current" /> 4.4 · Al Jubail
-              </p>
-              <h1 className="mt-5 font-display text-[clamp(3.5rem,12vw,8rem)] leading-[0.85] tracking-wide">
-                SMASHED
-                <br />
-                <span className="text-ember">CHARRED</span>
-                <br />
-                STACKED
-              </h1>
-              <p className="arabic mt-4 text-2xl font-bold text-muted-foreground">برجر على أصوله</p>
-              <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
-                FLP presses fresh beef onto a screaming flat-top until the edges go lace-crisp. Nothing sits, nothing
-                waits. Served until 3 in the morning.
-              </p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="#menu"
-                  className="rounded-sm bg-ember px-7 py-3.5 text-sm font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-ember transition-transform hover:scale-[1.03]"
-                >
-                  See the menu
-                </a>
-                <a
-                  href="https://instagram.com/flp.burger"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <Instagram className="h-4 w-4" /> @flp.burger
-                </a>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-6 rounded-full bg-primary/20 blur-3xl" aria-hidden="true" />
-              <img
-                src={heroBurger}
-                alt="FLP double smash burger with melted cheddar and charred beef patties"
-                width={1408}
-                height={1408}
-                className="relative w-full rounded-sm object-cover"
-              />
-            </div>
-          </div>
-          <div className="relative overflow-hidden border-y border-border bg-card py-3">
-            <div className="flex whitespace-nowrap font-display text-xl tracking-[0.35em] text-muted-foreground">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span key={i} className="px-6">
-                  FRESH BEEF DAILY <span className="text-primary">◆</span> OPEN TILL 3 AM{" "}
-                  <span className="text-primary">◆</span> AL JUBAIL <span className="text-primary">◆</span>
+        <section className="mx-auto max-w-6xl px-5 pt-10 pb-6">
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-primary">
+            <div className="grid items-center gap-6 md:grid-cols-2">
+              <div className="p-8 md:p-14">
+                <span className="inline-block rounded-full bg-background/20 px-4 py-1.5 text-xs font-bold tracking-wide text-primary-foreground">
+                  JUBAIL · DAMMAM · AL-BAHA
                 </span>
-              ))}
+                <h1 className="mt-5 font-display text-[clamp(2.75rem,8vw,4.75rem)] font-semibold leading-[0.95] text-primary-foreground">
+                  Flip your
+                  <br />
+                  mood ❤️
+                </h1>
+                <p className="arabic mt-3 text-2xl font-bold text-primary-foreground/90">اقلب مزاجك</p>
+                <p className="mt-4 max-w-sm text-base leading-relaxed text-primary-foreground/90">
+                  Fresh beef, crispy chicken and thick soft serve — served hot and fast until 3 in the morning.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href="#menu"
+                    className="rounded-full bg-background px-7 py-3.5 text-sm font-bold text-foreground transition-transform hover:scale-105"
+                  >
+                    See the menu
+                  </a>
+                  <a
+                    href="https://instagram.com/flp.burger"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-primary-foreground/60 px-6 py-3.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-background/15"
+                  >
+                    <Instagram className="h-4 w-4" /> @flp.burger
+                  </a>
+                </div>
+              </div>
+              <img
+                src={heroTray}
+                alt="Three FLP burgers on a tray with two cartons of fries"
+                width={1200}
+                height={1200}
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </section>
 
-        {/* Menu */}
-        <section id="menu" className="mx-auto max-w-6xl px-5 py-20">
-          <div className="flex items-end justify-between gap-6 border-b border-border pb-6">
-            <h2 className="font-display text-6xl tracking-wide md:text-7xl">
-              THE <span className="text-ember">MENU</span>
-            </h2>
-            <span className="arabic pb-2 text-xl font-bold text-muted-foreground">القائمة</span>
+        {/* Highlight circles, Instagram-style */}
+        <section className="border-y border-border">
+          <div className="mx-auto flex max-w-6xl gap-6 overflow-x-auto px-5 py-8">
+            {HIGHLIGHTS.map((h) => (
+              <div key={h.label} className="flex w-20 shrink-0 flex-col items-center gap-2 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary">
+                  <h.icon className="h-7 w-7 text-primary-foreground" />
+                </div>
+                <span className="text-[11px] font-semibold text-muted-foreground">{h.label}</span>
+              </div>
+            ))}
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+        </section>
+
+        {/* Marquee */}
+        <div className="overflow-hidden bg-primary py-3">
+          <div className="marquee-track flex w-max whitespace-nowrap font-display text-lg font-semibold text-primary-foreground">
+            {Array.from({ length: 2 }).map((_, block) => (
+              <span key={block} className="flex">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <span key={i} className="px-6">
+                    FLIP YOUR MOOD <span className="opacity-70">●</span> OPEN TILL 3 AM{" "}
+                    <span className="opacity-70">●</span>
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Menu */}
+        <section id="menu" className="mx-auto max-w-6xl px-5 py-16">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="font-display text-5xl font-semibold md:text-6xl">
+              The <span className="text-primary">menu</span>
+            </h2>
+            <span className="arabic text-xl font-bold text-muted-foreground">القائمة</span>
+          </div>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {MENU.map((item) => (
-              <article
-                key={item.name}
-                className="group overflow-hidden rounded-sm border border-border bg-card transition-colors hover:border-primary/60"
-              >
-                <div className="overflow-hidden">
+              <article key={item.name} className="overflow-hidden rounded-4xl bg-card">
+                <div className={`${item.tone} p-4`}>
                   <img
                     src={item.img}
                     alt={item.name}
                     loading="lazy"
                     width={800}
                     height={800}
-                    className="aspect-4/3 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="aspect-square w-full rounded-3xl object-cover"
                   />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-3xl tracking-wide">{item.name}</h3>
-                    <span className="font-display text-2xl text-primary">{item.price} SR</span>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="font-display text-2xl font-semibold">{item.name}</h3>
+                    <span className="font-display text-xl font-semibold text-primary">{item.price} SR</span>
                   </div>
                   <p className="arabic mt-1 text-sm font-bold text-muted-foreground">{item.ar}</p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
@@ -209,98 +245,73 @@ function Index() {
           </div>
         </section>
 
-        {/* Story */}
-        <section id="story" className="border-y border-border bg-card">
-          <div className="mx-auto max-w-3xl px-5 py-20 text-center">
-            <h2 className="font-display text-5xl tracking-wide md:text-6xl">
-              BUILT FOR THE <span className="text-ember">LATE SHIFT</span>
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              FLP started as a small counter in Al Fayha, Al Dafi — one flat-top, one sauce recipe, and a queue that
-              kept growing after midnight. We still grind fresh, still press to order, and still hand the bag over
-              hot.
-            </p>
-            <div className="mt-10 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
-              {[
-                { k: "4.4", v: "Google rating" },
-                { k: "3 AM", v: "Closing time" },
-                { k: "100%", v: "Fresh beef" },
-              ].map((s) => (
-                <div key={s.v}>
-                  <p className="font-display text-5xl text-ember">{s.k}</p>
-                  <p className="mt-1 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">{s.v}</p>
+        {/* Branches */}
+        <section id="branches" className="mx-auto max-w-6xl px-5 pb-16">
+          <div className="rounded-[2.5rem] bg-card p-8 md:p-12">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="font-display text-4xl font-semibold md:text-5xl">
+                Three <span className="text-primary">branches</span>
+              </h2>
+              <span className="arabic text-xl font-bold text-muted-foreground">فروعنا</span>
+            </div>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {BRANCHES.map((b) => (
+                <div key={b.city} className="rounded-3xl bg-background p-6">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  <h3 className="mt-3 font-display text-2xl font-semibold">{b.city}</h3>
+                  <p className="arabic text-sm font-bold text-muted-foreground">{b.ar}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{b.note}</p>
+                  {b.map && (
+                    <a
+                      href={b.map}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 inline-block text-xs font-bold text-primary hover:underline"
+                    >
+                      Open in Maps
+                    </a>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Visit */}
-        <section id="visit" className="mx-auto max-w-6xl px-5 py-20">
-          <h2 className="font-display text-6xl tracking-wide md:text-7xl">
-            COME <span className="text-ember">THROUGH</span>
-          </h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                icon: MapPin,
-                title: "Location",
-                lines: ["الفيحاء، الدفي", "Al Jubail 35811, Saudi Arabia"],
-                href: "https://maps.app.goo.gl/y6gakeGN2dEkSUhH8",
-                cta: "Open in Maps",
-              },
-              {
-                icon: Clock,
-                title: "Hours",
-                lines: ["Every day", "11:00 AM – 3:00 AM"],
-              },
-              {
-                icon: Phone,
-                title: "Call us",
-                lines: ["+966 59 711 5868"],
-                href: "tel:+966597115868",
-                cta: "Call now",
-              },
-            ].map((c) => (
-              <div key={c.title} className="rounded-sm border border-border bg-card p-7">
-                <c.icon className="h-6 w-6 text-primary" />
-                <h3 className="mt-4 font-display text-3xl tracking-wide">{c.title}</h3>
-                {c.lines.map((l) => (
-                  <p key={l} className="mt-1 text-sm text-muted-foreground">
-                    {l}
-                  </p>
-                ))}
-                {c.href && (
-                  <a
-                    href={c.href}
-                    target={c.href.startsWith("http") ? "_blank" : undefined}
-                    rel="noreferrer"
-                    className="mt-4 inline-block text-xs font-bold uppercase tracking-[0.18em] text-primary hover:underline"
-                  >
-                    {c.cta}
-                  </a>
-                )}
-              </div>
-            ))}
+        {/* Contact */}
+        <section id="visit" className="mx-auto max-w-6xl px-5 pb-20">
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="rounded-4xl bg-primary p-8">
+              <Clock className="h-6 w-6 text-primary-foreground" />
+              <h3 className="mt-4 font-display text-2xl font-semibold text-primary-foreground">Every day</h3>
+              <p className="mt-1 text-primary-foreground/90">11:00 AM – 3:00 AM</p>
+            </div>
+            <a href="tel:+966597115868" className="rounded-4xl bg-card p-8 transition-colors hover:bg-secondary">
+              <Phone className="h-6 w-6 text-primary" />
+              <h3 className="mt-4 font-display text-2xl font-semibold">Call us</h3>
+              <p className="mt-1 text-muted-foreground">+966 59 711 5868</p>
+            </a>
+            <a
+              href="https://instagram.com/flp.burger"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-4xl bg-card p-8 transition-colors hover:bg-secondary"
+            >
+              <Instagram className="h-6 w-6 text-primary" />
+              <h3 className="mt-4 font-display text-2xl font-semibold">Follow</h3>
+              <p className="mt-1 text-muted-foreground">@flp.burger · 6.3k followers</p>
+            </a>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-border bg-card">
+      <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-10 text-center sm:flex-row sm:justify-between sm:text-left">
-          <div className="flex items-baseline gap-2">
-            <span className="font-display text-3xl tracking-widest text-ember">FLP</span>
-            <span className="arabic text-lg font-bold text-muted-foreground">فلب</span>
+          <div className="flex items-center gap-3">
+            <img src={flpLogo} alt="FLP logo" loading="lazy" width={816} height={816} className="h-10 w-10" />
+            <span className="arabic text-base font-bold text-muted-foreground">فلب</span>
           </div>
-          <a
-            href="https://instagram.com/flp.burger"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <Instagram className="h-4 w-4" /> @flp.burger
-          </a>
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} FLP Burger, Al Jubail</p>
+          <p className="text-sm font-semibold text-primary">Flip your mood ❤️</p>
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} FLP Burger</p>
         </div>
       </footer>
     </div>
