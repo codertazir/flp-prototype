@@ -228,14 +228,13 @@ function Index() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a
-              href="https://linktr.ee/flp.burger"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105 sm:inline-flex"
+            <button
+              type="button"
+              onClick={() => setAppOpen(true)}
+              className="hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105 sm:inline-flex"
             >
-              Order now
-            </a>
+              <Download className="size-4" /> Install FLP app
+            </button>
             <button
               type="button"
               aria-label="Toggle menu"
@@ -264,8 +263,16 @@ function Index() {
           </div>
         </div>
 
-        {open && (
-          <nav className="mx-auto mt-2 max-w-5xl animate-fade-in rounded-3xl border border-border bg-background/95 p-3 shadow-soft backdrop-blur-xl md:hidden">
+        <div
+          className={`mx-auto max-w-5xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+            open ? "mt-2 max-h-96 opacity-100" : "pointer-events-none mt-0 max-h-0 opacity-0"
+          }`}
+        >
+          <nav
+            className={`rounded-3xl border border-border bg-background/95 p-3 shadow-soft backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              open ? "translate-y-0" : "-translate-y-3"
+            }`}
+          >
             {NAV.map((n) => (
               <a
                 key={n.href}
@@ -278,17 +285,73 @@ function Index() {
                 {n.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setAppOpen(true);
+              }}
+              className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-base font-bold text-primary-foreground sm:hidden"
+            >
+              <Download className="size-4" /> Install FLP app
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* Install app modal */}
+      <div
+        className={`fixed inset-0 z-[60] flex items-end justify-center p-4 transition-opacity duration-300 sm:items-center ${
+          appOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Install the FLP app"
+      >
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={() => setAppOpen(false)}
+          className="absolute inset-0 size-full cursor-default bg-ink/60 backdrop-blur-sm"
+        />
+        <div
+          className={`relative w-full max-w-sm rounded-4xl border border-border bg-background p-7 text-center shadow-pop transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            appOpen ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-95 opacity-0"
+          }`}
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setAppOpen(false)}
+            className="absolute top-4 right-4 inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+          >
+            <X className="size-4" />
+          </button>
+          <img src={flpLogo} alt="FLP logo" width={56} height={56} className="mx-auto size-14 rounded-2xl" />
+          <h2 className="mt-4 font-display text-2xl text-ink">Install the FLP app</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Choose your store to continue.</p>
+          <div className="mt-6 grid gap-2">
             <a
-              href="https://linktr.ee/flp.burger"
+              href={APP_LINKS.ios}
               target="_blank"
               rel="noreferrer"
-              className="mt-1 block rounded-2xl bg-primary px-4 py-3 text-center text-base font-bold text-primary-foreground"
+              onClick={() => setAppOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
             >
-              Order now
+              App Store <ArrowUpRight className="size-4" />
             </a>
-          </nav>
-        )}
-      </header>
+            <a
+              href={APP_LINKS.android}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setAppOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-bold text-ink transition-all duration-300 hover:border-primary/40 hover:text-primary"
+            >
+              Google Play <ArrowUpRight className="size-4" />
+            </a>
+          </div>
+        </div>
+      </div>
 
       <main id="top">
         {/* Hero — full screen */}
