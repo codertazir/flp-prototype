@@ -403,6 +403,13 @@ function Index() {
                 >
                   <Instagram className="size-4" /> @flp.burger
                 </a>
+                <a
+                  href="#visit"
+                  onClick={(e) => goTo(e, "#visit")}
+                  className="inline-flex items-center gap-2 rounded-full border border-background/40 px-7 py-3.5 text-base font-bold text-background transition-all duration-300 hover:bg-background hover:text-ink"
+                >
+                  Order now
+                </a>
               </div>
             </Reveal>
           </div>
@@ -659,14 +666,26 @@ function Index() {
 
           <div>
             <h3 className="font-display text-lg text-ink">Contact</h3>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li>Daily 11:00 AM — 3:00 AM</li>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="tel:+966597115868" className="transition-colors hover:text-primary">
+                <a href="tel:+966597115868" className="font-semibold text-ink transition-colors hover:text-primary">
                   +966 59 711 5868
                 </a>
+                <span className="block text-xs">Jubail branch</span>
               </li>
-              <li>Al Fayhaa, Al Dafi — Jubail 35811</li>
+              <li>Jubail — Al Fayhaa, Al Dafi 35811</li>
+              <li>Dammam — Al Shatea District</li>
+              <li>Al-Baha — King Fahd Road</li>
+              <li>
+                <a
+                  href={FLP_ONLINE}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
+                >
+                  Order on FLP online <ArrowUpRight className="size-3.5" />
+                </a>
+              </li>
             </ul>
           </div>
         </div>
