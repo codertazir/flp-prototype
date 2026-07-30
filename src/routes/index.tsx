@@ -667,9 +667,21 @@ function Index() {
                 </a>
                 <span className="block text-xs">Jubail branch</span>
               </li>
-              <li>Jubail — Al Fayhaa, Al Dafi 35811</li>
-              <li>Dammam — Al Shatea District</li>
-              <li>Al-Baha — King Fahd Road</li>
+              {BRANCHES.map((b) => (
+                <li key={b.city}>
+                  <a
+                    href={b.map}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-start gap-1.5 transition-colors hover:text-primary"
+                  >
+                    <MapPin className="mt-0.5 size-3.5 shrink-0 text-primary" />
+                    <span>
+                      {b.city} — {b.address.replace(` — ${b.city}`, "")}
+                    </span>
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
                   href={FLP_ONLINE}
