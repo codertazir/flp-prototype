@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Instagram,
@@ -160,6 +160,13 @@ const MENU: Item[] = [
 ];
 
 const CATS = ["All", "Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
+
+const HERO_IMAGES = [
+  { src: heroTray, alt: "Tray of FLP smash burgers and fries" },
+  { src: menuClassic, alt: "FLP classic smash burger" },
+  { src: brandSando, alt: "FLP crispy chicken sando" },
+  { src: menuFries, alt: "FLP loaded fries" },
+];
 
 const WHY = [
   {
