@@ -3,7 +3,7 @@ import type { Item } from "@/data/menu";
 export function Riyal({ className = "" }: { className?: string }) {
   return (
     <span aria-label="Saudi Riyal" className={className}>
-      ﷼
+      ⃁
     </span>
   );
 }
