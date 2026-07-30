@@ -1,5 +1,5 @@
 import { useEffect, useState, type MouseEvent } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Instagram,
   Phone,
@@ -9,9 +9,15 @@ import {
   Flame,
   ArrowRight,
   ChevronDown,
+  ArrowUpRight,
+  Download,
+  X,
 } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
+import { MenuCard } from "@/components/MenuCard";
+import { MENU } from "@/data/menu";
+import hungerLogo from "@/assets/hungerstation.png.asset.json";
 import flpLogo from "@/assets/flp-logo.png";
 import heroTray from "@/assets/hero-tray.jpg";
 import brandCup from "@/assets/brand-cup.jpg";
@@ -73,92 +79,6 @@ const NAV = [
   { href: "#visit", label: "Visit Us" },
 ];
 
-type Item = {
-  name: string;
-  desc: string;
-  price: number;
-  cat: "Burgers" | "Sandos" | "Sides" | "Drinks" | "Sweet";
-  img: string;
-  tag?: string;
-};
-
-const MENU: Item[] = [
-  {
-    name: "FLP Burger",
-    desc: "Sesame bun, seared beef patty, cheddar, pickles and the FLP sauce.",
-    price: 28,
-    cat: "Burgers",
-    img: menuClassic,
-    tag: "Best seller",
-  },
-  {
-    name: "Double Flip",
-    desc: "Two smashed patties, double cheese, caramelised onion.",
-    price: 38,
-    cat: "Burgers",
-    img: heroTray,
-  },
-  {
-    name: "Crispy Chicken",
-    desc: "Buttermilk-crisp chicken thigh, lettuce and creamy garlic sauce.",
-    price: 26,
-    cat: "Burgers",
-    img: menuChicken,
-  },
-  {
-    name: "Crispy Sando",
-    desc: "Long sesame roll packed with crunchy chicken and spicy mayo.",
-    price: 26,
-    cat: "Sandos",
-    img: brandSando,
-  },
-  {
-    name: "Beef Sando",
-    desc: "Thin sliced beef, melted cheese and pickled jalapeño.",
-    price: 29,
-    cat: "Sandos",
-    img: brandSando,
-  },
-  {
-    name: "FLP Fries",
-    desc: "Golden fries in the orange carton, dusted with FLP seasoning.",
-    price: 12,
-    cat: "Sides",
-    img: menuFries,
-  },
-  {
-    name: "Cheesy Fries",
-    desc: "Fries loaded with molten cheese sauce and crispy onion.",
-    price: 18,
-    cat: "Sides",
-    img: menuFries,
-  },
-  {
-    name: "FLP Cooler",
-    desc: "Ice-cold citrus cooler served in the orange cup you already know.",
-    price: 12,
-    cat: "Drinks",
-    img: brandCup,
-  },
-  {
-    name: "Soft Serve",
-    desc: "Swirled mango-orange soft serve, straight from the machine.",
-    price: 14,
-    cat: "Sweet",
-    img: brandSoftserve,
-    tag: "New",
-  },
-  {
-    name: "Shake",
-    desc: "Thick vanilla or chocolate shake, blended to order.",
-    price: 19,
-    cat: "Sweet",
-    img: brandCup,
-  },
-];
-
-const CATS = ["All", "Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
-
 const HERO_IMAGES = [
   { src: heroTray, alt: "Tray of FLP smash burgers and fries" },
   { src: menuClassic, alt: "FLP classic smash burger" },
@@ -213,21 +133,21 @@ const BRANCHES = [
   },
 ];
 
-function Riyal({ className = "" }: { className?: string }) {
-  return (
-    <span aria-label="Saudi Riyal" className={className}>
-      ﷼
-    </span>
-  );
-}
+const APP_LINKS = {
+  ios: "https://apps.apple.com/us/app/%D9%81%D9%84%D8%A8-flp/id6753766219#information",
+  android: "https://play.google.com/store/apps/details?id=com.foodtech.flp",
+};
+
+const FLP_ONLINE = "https://flp.tryorder.net/en/menu";
+
+const PREVIEW = MENU.slice(0, 6);
 
 function Index() {
-  const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [open, setOpen] = useState(false);
+  const [appOpen, setAppOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroIdx, setHeroIdx] = useState(0);
   const [active, setActive] = useState("");
-  const items = cat === "All" ? MENU : MENU.filter((i) => i.cat === cat);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -308,14 +228,13 @@ function Index() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a
-              href="https://linktr.ee/flp.burger"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105 sm:inline-flex"
+            <button
+              type="button"
+              onClick={() => setAppOpen(true)}
+              className="hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105 sm:inline-flex"
             >
-              Order now
-            </a>
+              <Download className="size-4" /> Install FLP app
+            </button>
             <button
               type="button"
               aria-label="Toggle menu"
@@ -344,8 +263,16 @@ function Index() {
           </div>
         </div>
 
-        {open && (
-          <nav className="mx-auto mt-2 max-w-5xl animate-fade-in rounded-3xl border border-border bg-background/95 p-3 shadow-soft backdrop-blur-xl md:hidden">
+        <div
+          className={`mx-auto max-w-5xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+            open ? "mt-2 max-h-96 opacity-100" : "pointer-events-none mt-0 max-h-0 opacity-0"
+          }`}
+        >
+          <nav
+            className={`rounded-3xl border border-border bg-background/95 p-3 shadow-soft backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              open ? "translate-y-0" : "-translate-y-3"
+            }`}
+          >
             {NAV.map((n) => (
               <a
                 key={n.href}
@@ -358,17 +285,73 @@ function Index() {
                 {n.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setAppOpen(true);
+              }}
+              className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-4 py-3 text-base font-bold text-primary-foreground sm:hidden"
+            >
+              <Download className="size-4" /> Install FLP app
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      {/* Install app modal */}
+      <div
+        className={`fixed inset-0 z-[60] flex items-end justify-center p-4 transition-opacity duration-300 sm:items-center ${
+          appOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Install the FLP app"
+      >
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={() => setAppOpen(false)}
+          className="absolute inset-0 size-full cursor-default bg-ink/60 backdrop-blur-sm"
+        />
+        <div
+          className={`relative w-full max-w-sm rounded-4xl border border-border bg-background p-7 text-center shadow-pop transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            appOpen ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-95 opacity-0"
+          }`}
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setAppOpen(false)}
+            className="absolute top-4 right-4 inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-primary"
+          >
+            <X className="size-4" />
+          </button>
+          <img src={flpLogo} alt="FLP logo" width={56} height={56} className="mx-auto size-14 rounded-2xl" />
+          <h2 className="mt-4 font-display text-2xl text-ink">Install the FLP app</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Choose your store to continue.</p>
+          <div className="mt-6 grid gap-2">
             <a
-              href="https://linktr.ee/flp.burger"
+              href={APP_LINKS.ios}
               target="_blank"
               rel="noreferrer"
-              className="mt-1 block rounded-2xl bg-primary px-4 py-3 text-center text-base font-bold text-primary-foreground"
+              onClick={() => setAppOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
             >
-              Order now
+              App Store <ArrowUpRight className="size-4" />
             </a>
-          </nav>
-        )}
-      </header>
+            <a
+              href={APP_LINKS.android}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setAppOpen(false)}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-bold text-ink transition-all duration-300 hover:border-primary/40 hover:text-primary"
+            >
+              Google Play <ArrowUpRight className="size-4" />
+            </a>
+          </div>
+        </div>
+      </div>
 
       <main id="top">
         {/* Hero — full screen */}
@@ -420,6 +403,13 @@ function Index() {
                 >
                   <Instagram className="size-4" /> @flp.burger
                 </a>
+                <a
+                  href="#visit"
+                  onClick={(e) => goTo(e, "#visit")}
+                  className="inline-flex items-center gap-2 rounded-full border border-background/40 px-7 py-3.5 text-base font-bold text-background transition-all duration-300 hover:bg-background hover:text-ink"
+                >
+                  Order now
+                </a>
               </div>
             </Reveal>
           </div>
@@ -457,60 +447,33 @@ function Index() {
               </h2>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {CATS.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setCat(c)}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                      cat === c
-                        ? "bg-primary text-primary-foreground shadow-pop"
-                        : "bg-background text-muted-foreground hover:text-primary"
-                    }`}
+            <div className="relative mt-10">
+              <div className="grid gap-3 md:grid-cols-2">
+                {PREVIEW.map((item, i) => (
+                  <Reveal
+                    key={item.name}
+                    delay={Math.min(i, 6) * 60}
+                    className={i > 2 ? "max-md:hidden" : ""}
                   >
-                    {c}
-                  </button>
+                    <MenuCard item={item} />
+                  </Reveal>
                 ))}
               </div>
-            </Reveal>
 
-            <div className="mt-10 grid gap-3 md:grid-cols-2">
-              {items.map((item, i) => (
-                <Reveal key={item.name} delay={Math.min(i, 6) * 60}>
-                  <article className="group flex items-center gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
-                    <div className="size-16 shrink-0 overflow-hidden rounded-xl sm:size-[4.5rem]">
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        width={200}
-                        height={200}
-                        loading="lazy"
-                        className="size-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="truncate font-display text-base text-ink">{item.name}</h3>
-                        {item.tag && (
-                          <span className="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.6rem] font-bold tracking-wider text-accent-foreground uppercase">
-                            {item.tag}
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
-                    </div>
-
-                    <div className="shrink-0 pl-1 pr-1 text-right">
-                      <span className="inline-flex items-baseline gap-1 font-display text-lg text-primary">
-                        {item.price} <Riyal className="text-sm" />
-                      </span>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
+              {/* Gradual blur + view full menu */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40">
+                <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent,black_65%)]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream/70 to-cream" />
+                <div className="absolute inset-x-0 bottom-3 flex justify-center">
+                  <Link
+                    to="/menu"
+                    className="group pointer-events-auto inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
+                  >
+                    View full menu
+                    <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -591,13 +554,15 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Visit us</p>
-              <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">Three branches, one flat top</h2>
+              <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">
+                Hungry right <span className="text-primary">now?</span>
+              </h2>
             </Reveal>
 
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <div className="mt-12 grid items-start gap-5 md:grid-cols-3">
               {BRANCHES.map((b, i) => (
                 <Reveal key={b.city} delay={i * 120}>
-                  <div className="group flex h-full flex-col rounded-3xl border border-border p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft">
+                  <div className="group flex flex-col rounded-3xl border border-border p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft">
                     <h3 className="font-display text-2xl text-ink">{b.city}</h3>
                     <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
@@ -620,22 +585,42 @@ function Index() {
                         <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
                       </a>
                     ) : null}
-                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                      <span className="font-semibold text-ink">Order online:</span>
-                      <a
-                        href={b.hunger}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center rounded-full border border-primary/30 bg-accent px-3 py-1 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-                      >
-                        HungerStation
-                      </a>
+                    <div className="mt-4">
+                      <span className="text-sm font-semibold text-ink">Order online:</span>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <a
+                          href={b.hunger}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-2xl border border-border bg-background py-1 pr-2.5 pl-1 text-xs font-bold text-ink transition-all duration-300 hover:border-primary/40 hover:text-primary hover:shadow-soft"
+                        >
+                          <img
+                            src={hungerLogo.url}
+                            alt="HungerStation"
+                            width={40}
+                            height={40}
+                            loading="lazy"
+                            className="size-5 rounded-lg"
+                          />
+                          HungerStation
+                          <ArrowUpRight className="size-3.5 opacity-70" />
+                        </a>
+                        <a
+                          href={FLP_ONLINE}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-2xl border border-primary/30 bg-accent px-2.5 py-1.5 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                        >
+                          FLP online
+                          <ArrowUpRight className="size-3.5 opacity-70" />
+                        </a>
+                      </div>
                     </div>
                     <a
                       href={b.map}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
+                      className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
                     >
                       Get directions <ArrowRight className="size-4" />
                     </a>
@@ -643,31 +628,6 @@ function Index() {
                 </Reveal>
               ))}
             </div>
-
-            <Reveal delay={200}>
-              <div className="mt-14 overflow-hidden rounded-4xl bg-primary px-8 py-14 text-center text-primary-foreground">
-                <h2 className="font-display text-4xl sm:text-5xl">Hungry right now?</h2>
-                <p className="mx-auto mt-4 max-w-lg text-base opacity-90">
-                  Order for delivery or pick-up, or call the nearest branch and we'll have it ready.
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-3">
-                  <a
-                    href="https://linktr.ee/flp.burger"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full bg-background px-7 py-3.5 text-base font-bold text-primary transition-transform duration-300 hover:scale-105"
-                  >
-                    Order online
-                  </a>
-                  <a
-                    href="tel:+966597115868"
-                    className="rounded-full border border-primary-foreground/60 px-7 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-primary-foreground hover:text-primary"
-                  >
-                    Call us
-                  </a>
-                </div>
-              </div>
-            </Reveal>
           </div>
         </section>
       </main>
@@ -706,14 +666,26 @@ function Index() {
 
           <div>
             <h3 className="font-display text-lg text-ink">Contact</h3>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <li>Daily 11:00 AM — 3:00 AM</li>
+            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
               <li>
-                <a href="tel:+966597115868" className="transition-colors hover:text-primary">
+                <a href="tel:+966597115868" className="font-semibold text-ink transition-colors hover:text-primary">
                   +966 59 711 5868
                 </a>
+                <span className="block text-xs">Jubail branch</span>
               </li>
-              <li>Al Fayhaa, Al Dafi — Jubail 35811</li>
+              <li>Jubail — Al Fayhaa, Al Dafi 35811</li>
+              <li>Dammam — Al Shatea District</li>
+              <li>Al-Baha — King Fahd Road</li>
+              <li>
+                <a
+                  href={FLP_ONLINE}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
+                >
+                  Order on FLP online <ArrowUpRight className="size-3.5" />
+                </a>
+              </li>
             </ul>
           </div>
         </div>
