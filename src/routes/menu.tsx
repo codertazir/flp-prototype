@@ -38,7 +38,7 @@ function MenuPage() {
   useEffect(() => {
     const onScroll = () => {
       const line = 220;
-      let current = CATS[0];
+      let current: (typeof CATS)[number] = CATS[0];
       for (const c of CATS) {
         const el = document.getElementById(slug(c));
         if (el && el.getBoundingClientRect().top <= line) current = c;
