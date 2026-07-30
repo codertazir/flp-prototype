@@ -403,13 +403,6 @@ function Index() {
                 >
                   <Instagram className="size-4" /> @flp.burger
                 </a>
-                <a
-                  href="#visit"
-                  onClick={(e) => goTo(e, "#visit")}
-                  className="inline-flex items-center gap-2 rounded-full border border-background/40 px-7 py-3.5 text-base font-bold text-background transition-all duration-300 hover:bg-background hover:text-ink"
-                >
-                  Order now
-                </a>
               </div>
             </Reveal>
           </div>
