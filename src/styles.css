@@ -19,7 +19,7 @@
  */
 
 @theme inline {
-  --font-display: "Fredoka", "Cairo", sans-serif;
+  --font-display: "Archivo Black", "Fredoka", sans-serif;
   --font-sans: "Cairo", sans-serif;
   --font-arabic: "Cairo", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
@@ -149,6 +149,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     border-color: var(--color-border);
   }
@@ -163,8 +167,8 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.015em;
   }
 }
 
@@ -182,7 +186,11 @@
 }
 
 @utility marquee-track {
-  animation: flp-marquee 28s linear infinite;
+  animation: flp-marquee 46s linear infinite;
+}
+
+@utility hero-fade {
+  transition: opacity 1.4s ease-in-out;
 }
 
 @keyframes flp-marquee {

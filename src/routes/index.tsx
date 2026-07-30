@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Instagram,
@@ -9,8 +9,6 @@ import {
   Flame,
   ArrowRight,
   ChevronDown,
-  Menu as MenuIcon,
-  X,
 } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
@@ -161,6 +159,13 @@ const MENU: Item[] = [
 
 const CATS = ["All", "Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
 
+const HERO_IMAGES = [
+  { src: heroTray, alt: "Tray of FLP smash burgers and fries" },
+  { src: menuClassic, alt: "FLP classic smash burger" },
+  { src: brandSando, alt: "FLP crispy chicken sando" },
+  { src: menuFries, alt: "FLP loaded fries" },
+];
+
 const WHY = [
   {
     icon: Flame,
@@ -182,18 +187,24 @@ const WHY = [
 const BRANCHES = [
   {
     city: "Jubail",
-    address: "Al Fayhaa, Al Dafi — Jubail 35811",
-    map: "https://maps.app.goo.gl/y6gakeGN2dEkSUhH8",
+    address: "Al Fayhaa District, Al Dafi — Jubail 35811",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/Fzw14kEaQugvMLWa8",
   },
   {
     city: "Dammam",
-    address: "Now serving — see Instagram for directions",
-    map: "https://www.google.com/maps/search/FLP+burger+Dammam",
+    address: "Al Shatea District — Dammam",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
   },
   {
     city: "Al-Baha",
-    address: "Now serving — see Instagram for directions",
-    map: "https://www.google.com/maps/search/FLP+burger+Al+Baha",
+    address: "King Fahd Road — Al-Baha",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/vipgLJvHEU92eFhM9",
   },
 ];
 
@@ -209,6 +220,8 @@ function Index() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [heroIdx, setHeroIdx] = useState(0);
+  const [active, setActive] = useState("");
   const items = cat === "All" ? MENU : MENU.filter((i) => i.cat === cat);
 
   useEffect(() => {
@@ -217,6 +230,35 @@ function Index() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => setHeroIdx((v) => (v + 1) % HERO_IMAGES.length), 5000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const sections = NAV.map((n) => document.querySelector(n.href)).filter(Boolean) as Element[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(`#${visible.target.id}`);
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] },
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  const goTo = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    const el = document.querySelector(href);
+    if (!el) return;
+    e.preventDefault();
+    setOpen(false);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", href);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -244,7 +286,10 @@ function Index() {
               <a
                 key={n.href}
                 href={n.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:bg-accent hover:text-primary"
+                onClick={(e) => goTo(e, n.href)}
+                className={`rounded-full px-4 py-2 font-display text-xs tracking-wide uppercase transition-all duration-300 hover:text-primary ${
+                  active === n.href ? "text-primary" : "text-ink"
+                }`}
               >
                 {n.label}
               </a>
@@ -263,10 +308,27 @@ function Index() {
             <button
               type="button"
               aria-label="Toggle menu"
+              aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-background/70 transition-colors hover:bg-accent md:hidden"
+              className="relative inline-flex size-10 items-center justify-center rounded-full border border-border bg-background/70 transition-colors hover:bg-accent md:hidden"
             >
-              {open ? <X className="size-5" /> : <MenuIcon className="size-5" />}
+              <span className="relative block h-4 w-5">
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-ink transition-all duration-300 ease-out ${
+                    open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0.5"
+                  }`}
+                />
+                <span
+                  className={`absolute top-1/2 left-0 block h-0.5 w-5 -translate-y-1/2 rounded-full bg-ink transition-all duration-200 ${
+                    open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-ink transition-all duration-300 ease-out ${
+                    open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0.5"
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </div>
@@ -277,8 +339,10 @@ function Index() {
               <a
                 key={n.href}
                 href={n.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-2xl px-4 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent hover:text-primary"
+                onClick={(e) => goTo(e, n.href)}
+                className={`block rounded-2xl px-4 py-3 font-display text-sm tracking-wide uppercase transition-colors hover:bg-accent hover:text-primary ${
+                  active === n.href ? "text-primary" : "text-ink"
+                }`}
               >
                 {n.label}
               </a>
@@ -298,15 +362,18 @@ function Index() {
       <main id="top">
         {/* Hero — full screen */}
         <section className="relative flex h-svh min-h-[600px] items-center justify-center overflow-hidden">
-          <img
-            src={heroTray}
-            alt="Tray of FLP smash burgers and fries"
-            className="absolute inset-0 size-full scale-105 object-cover"
-          />
+          {HERO_IMAGES.map((img, i) => (
+            <img
+              key={img.src}
+              src={img.src}
+              alt={img.alt}
+              aria-hidden={i !== heroIdx}
+              className={`hero-fade absolute inset-0 size-full scale-105 object-cover ${
+                i === heroIdx ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
           <div className="absolute inset-0 bg-ink/70" />
-          <div className="absolute -right-24 top-1/4 hidden w-64 overflow-hidden rounded-4xl border-4 border-background/20 float-slow lg:block">
-            <img src={brandSoftserve} alt="FLP soft serve" className="size-full object-cover" />
-          </div>
 
           <div className="relative z-10 mx-auto max-w-3xl px-5 text-center">
             <Reveal delay={80}>
@@ -328,6 +395,7 @@ function Index() {
               <div className="mt-9 flex flex-wrap justify-center gap-3">
                 <a
                   href="#menu"
+                  onClick={(e) => goTo(e, "#menu")}
                   className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
                 >
                   See the menu
@@ -348,6 +416,7 @@ function Index() {
           {/* Subtle scroll cue */}
           <a
             href="#menu"
+            onClick={(e) => goTo(e, "#menu")}
             className="absolute inset-x-0 bottom-7 z-10 mx-auto flex w-fit flex-col items-center gap-1.5 text-background/70 transition-colors hover:text-background"
           >
             <span className="text-[0.65rem] font-semibold tracking-[0.35em] uppercase">Scroll</span>
@@ -357,9 +426,9 @@ function Index() {
 
         {/* Marquee */}
         <div className="overflow-hidden border-y border-border bg-primary py-2.5 text-primary-foreground">
-          <div className="marquee-track flex w-max gap-8 whitespace-nowrap font-display text-sm tracking-[0.2em] uppercase">
+          <div className="marquee-track flex w-max gap-20 whitespace-nowrap font-display text-sm tracking-[0.2em] uppercase">
             {Array.from({ length: 8 }).map((_, i) => (
-              <span key={i} className="flex items-center gap-8">
+              <span key={i} className="flex items-center gap-20">
                 Flip your mood <span className="opacity-50">●</span> Fresh beef daily{" "}
                 <span className="opacity-50">●</span> Open till 3 AM <span className="opacity-50">●</span>
               </span>
@@ -526,10 +595,10 @@ function Index() {
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
                     </p>
                     <a
-                      href="tel:+966597115868"
+                      href={`tel:${b.tel}`}
                       className="mt-2 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
                     >
-                      <Phone className="size-4 shrink-0 text-primary" /> +966 59 711 5868
+                      <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
                     </a>
                     <a
                       href={b.map}
@@ -596,7 +665,7 @@ function Index() {
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               {NAV.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="transition-colors hover:text-primary">
+                  <a href={n.href} onClick={(e) => goTo(e, n.href)} className="transition-colors hover:text-primary">
                     {n.label}
                   </a>
                 </li>
