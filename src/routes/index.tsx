@@ -186,25 +186,30 @@ const WHY = [
 
 const BRANCHES = [
   {
+    city: "Dammam",
+    address: "Al Shatea District — Dammam",
+    hours: ["Sat – Thu: 11:00 AM — 3:00 PM", "Friday: 1:00 PM — 3:00 PM"],
+    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%AF%D9%85%D8%A7%D9%85/%D8%A7%D9%84%D8%B4%D8%B9%D9%84%D8%A9-%D9%81%D8%A7%D8%AE%D8%B1%D9%8A%D9%87/%d9%81%d9%84%d8%a8-158201",
+  },
+  {
     city: "Jubail",
     address: "Al Fayhaa District, Al Dafi — Jubail 35811",
     phone: "+966 59 711 5868",
     tel: "+966597115868",
+    hours: ["Sat – Thu: 11:00 AM — 3:00 PM", "Friday: 1:00 PM — 3:00 PM"],
     map: "https://maps.app.goo.gl/Fzw14kEaQugvMLWa8",
-  },
-  {
-    city: "Dammam",
-    address: "Al Shatea District — Dammam",
-    phone: "+966 59 711 5868",
-    tel: "+966597115868",
-    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%AC%D8%A8%D9%8A%D9%84/%D8%A7%D9%84%D9%81%D9%8A%D8%AD%D8%A7%D8%A1/%d9%81%d9%84%d8%a8-82114",
   },
   {
     city: "Al-Baha",
     address: "King Fahd Road — Al-Baha",
-    phone: "+966 59 711 5868",
-    tel: "+966597115868",
+    hours: ["Every day: 2:00 PM — 2:00 AM"],
     map: "https://maps.app.goo.gl/vipgLJvHEU92eFhM9",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9/%d9%81%d9%84%d8%a8-187559",
   },
 ];
 
