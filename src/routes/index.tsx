@@ -520,7 +520,7 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Why FLP</p>
-              <h2 className="mt-3 max-w-xl font-display text-4xl text-ink sm:text-5xl">
+              <h2 className="mt-3 font-display text-3xl whitespace-nowrap text-ink sm:text-4xl lg:text-5xl">
                 Simple food, done properly
               </h2>
             </Reveal>
@@ -592,9 +592,6 @@ function Index() {
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Visit us</p>
               <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">Three branches, one flat top</h2>
-              <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="size-4 text-primary" /> Open daily 11:00 AM — 3:00 AM
-              </p>
             </Reveal>
 
             <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -605,12 +602,35 @@ function Index() {
                     <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
                     </p>
-                    <a
-                      href={`tel:${b.tel}`}
-                      className="mt-2 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
-                    >
-                      <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
-                    </a>
+                    <div className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+                      <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>
+                        {b.hours.map((h) => (
+                          <span key={h} className="block">
+                            {h}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+                    {b.phone ? (
+                      <a
+                        href={`tel:${b.tel}`}
+                        className="mt-3 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
+                      >
+                        <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
+                      </a>
+                    ) : null}
+                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                      <span className="font-semibold text-ink">Order online:</span>
+                      <a
+                        href={b.hunger}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center rounded-full border border-primary/30 bg-accent px-3 py-1 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                      >
+                        HungerStation
+                      </a>
+                    </div>
                     <a
                       href={b.map}
                       target="_blank"
