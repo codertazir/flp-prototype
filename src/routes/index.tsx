@@ -1,5 +1,5 @@
 import { useEffect, useState, type MouseEvent } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Instagram,
   Phone,
@@ -9,9 +9,15 @@ import {
   Flame,
   ArrowRight,
   ChevronDown,
+  ArrowUpRight,
+  Download,
+  X,
 } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
+import { MenuCard } from "@/components/MenuCard";
+import { MENU } from "@/data/menu";
+import hungerLogo from "@/assets/hungerstation.png.asset.json";
 import flpLogo from "@/assets/flp-logo.png";
 import heroTray from "@/assets/hero-tray.jpg";
 import brandCup from "@/assets/brand-cup.jpg";
