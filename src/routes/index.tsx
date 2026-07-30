@@ -476,8 +476,9 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Why FLP</p>
-              <h2 className="mt-3 font-display text-3xl whitespace-nowrap text-ink sm:text-4xl lg:text-5xl">
-                Simple food, done properly
+              <h2 className="mt-3 font-display text-3xl text-ink sm:text-4xl lg:whitespace-nowrap lg:text-5xl">
+                Simple food,
+                <br className="sm:hidden" /> done properly
               </h2>
             </Reveal>
 
