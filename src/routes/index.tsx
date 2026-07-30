@@ -133,21 +133,21 @@ const BRANCHES = [
   },
 ];
 
-function Riyal({ className = "" }: { className?: string }) {
-  return (
-    <span aria-label="Saudi Riyal" className={className}>
-      ﷼
-    </span>
-  );
-}
+const APP_LINKS = {
+  ios: "https://apps.apple.com/us/app/%D9%81%D9%84%D8%A8-flp/id6753766219#information",
+  android: "https://play.google.com/store/apps/details?id=com.foodtech.flp",
+};
+
+const FLP_ONLINE = "https://flp.tryorder.net/en/menu";
+
+const PREVIEW = MENU.slice(0, 6);
 
 function Index() {
-  const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [open, setOpen] = useState(false);
+  const [appOpen, setAppOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [heroIdx, setHeroIdx] = useState(0);
   const [active, setActive] = useState("");
-  const items = cat === "All" ? MENU : MENU.filter((i) => i.cat === cat);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
