@@ -186,25 +186,30 @@ const WHY = [
 
 const BRANCHES = [
   {
+    city: "Dammam",
+    address: "Al Shatea District — Dammam",
+    hours: ["Sat – Thu: 11:00 AM — 3:00 PM", "Friday: 1:00 PM — 3:00 PM"],
+    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%AF%D9%85%D8%A7%D9%85/%D8%A7%D9%84%D8%B4%D8%B9%D9%84%D8%A9-%D9%81%D8%A7%D8%AE%D8%B1%D9%8A%D9%87/%d9%81%d9%84%d8%a8-158201",
+  },
+  {
     city: "Jubail",
     address: "Al Fayhaa District, Al Dafi — Jubail 35811",
     phone: "+966 59 711 5868",
     tel: "+966597115868",
+    hours: ["Sat – Thu: 11:00 AM — 3:00 PM", "Friday: 1:00 PM — 3:00 PM"],
     map: "https://maps.app.goo.gl/Fzw14kEaQugvMLWa8",
-  },
-  {
-    city: "Dammam",
-    address: "Al Shatea District — Dammam",
-    phone: "+966 59 711 5868",
-    tel: "+966597115868",
-    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%AC%D8%A8%D9%8A%D9%84/%D8%A7%D9%84%D9%81%D9%8A%D8%AD%D8%A7%D8%A1/%d9%81%d9%84%d8%a8-82114",
   },
   {
     city: "Al-Baha",
     address: "King Fahd Road — Al-Baha",
-    phone: "+966 59 711 5868",
-    tel: "+966597115868",
+    hours: ["Every day: 2:00 PM — 2:00 AM"],
     map: "https://maps.app.goo.gl/vipgLJvHEU92eFhM9",
+    hunger:
+      "https://hungerstation.com/sa-ar/restaurants/regions/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9/%D8%A7%D9%84%D8%A8%D8%A7%D8%AD%D8%A9/%d9%81%d9%84%d8%a8-187559",
   },
 ];
 
@@ -237,18 +242,24 @@ function Index() {
   }, []);
 
   useEffect(() => {
-    const sections = NAV.map((n) => document.querySelector(n.href)).filter(Boolean) as Element[];
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(`#${visible.target.id}`);
-      },
-      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] },
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
+    const onScroll = () => {
+      const line = window.innerHeight * 0.35;
+      let current = "";
+      for (const n of NAV) {
+        const el = document.querySelector(n.href);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= line && rect.bottom > line) current = n.href;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const goTo = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -509,7 +520,7 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Why FLP</p>
-              <h2 className="mt-3 max-w-xl font-display text-4xl text-ink sm:text-5xl">
+              <h2 className="mt-3 font-display text-3xl whitespace-nowrap text-ink sm:text-4xl lg:text-5xl">
                 Simple food, done properly
               </h2>
             </Reveal>
@@ -581,9 +592,6 @@ function Index() {
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Visit us</p>
               <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">Three branches, one flat top</h2>
-              <p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="size-4 text-primary" /> Open daily 11:00 AM — 3:00 AM
-              </p>
             </Reveal>
 
             <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -594,12 +602,35 @@ function Index() {
                     <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
                     </p>
-                    <a
-                      href={`tel:${b.tel}`}
-                      className="mt-2 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
-                    >
-                      <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
-                    </a>
+                    <div className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+                      <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
+                      <span>
+                        {b.hours.map((h) => (
+                          <span key={h} className="block">
+                            {h}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
+                    {b.phone ? (
+                      <a
+                        href={`tel:${b.tel}`}
+                        className="mt-3 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
+                      >
+                        <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
+                      </a>
+                    ) : null}
+                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                      <span className="font-semibold text-ink">Order online:</span>
+                      <a
+                        href={b.hunger}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center rounded-full border border-primary/30 bg-accent px-3 py-1 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                      >
+                        HungerStation
+                      </a>
+                    </div>
                     <a
                       href={b.map}
                       target="_blank"
