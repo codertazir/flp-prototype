@@ -11,7 +11,7 @@ export function Riyal({ className = "" }: { className?: string }) {
 export function MenuCard({ item }: { item: Item }) {
   return (
     <article className="group flex items-center gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
-      <div className="size-16 shrink-0 overflow-hidden rounded-xl sm:size-[4.5rem]">
+      <div className="size-20 shrink-0 overflow-hidden rounded-xl sm:size-24">
         <img
           src={item.img}
           alt={item.name}
