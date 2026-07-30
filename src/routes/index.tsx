@@ -377,60 +377,33 @@ function Index() {
               </h2>
             </Reveal>
 
-            <Reveal delay={120}>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {CATS.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setCat(c)}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                      cat === c
-                        ? "bg-primary text-primary-foreground shadow-pop"
-                        : "bg-background text-muted-foreground hover:text-primary"
-                    }`}
+            <div className="relative mt-10">
+              <div className="grid gap-3 md:grid-cols-2">
+                {PREVIEW.map((item, i) => (
+                  <Reveal
+                    key={item.name}
+                    delay={Math.min(i, 6) * 60}
+                    className={i > 2 ? "max-md:hidden" : ""}
                   >
-                    {c}
-                  </button>
+                    <MenuCard item={item} />
+                  </Reveal>
                 ))}
               </div>
-            </Reveal>
 
-            <div className="mt-10 grid gap-3 md:grid-cols-2">
-              {items.map((item, i) => (
-                <Reveal key={item.name} delay={Math.min(i, 6) * 60}>
-                  <article className="group flex items-center gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
-                    <div className="size-16 shrink-0 overflow-hidden rounded-xl sm:size-[4.5rem]">
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        width={200}
-                        height={200}
-                        loading="lazy"
-                        className="size-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <h3 className="truncate font-display text-base text-ink">{item.name}</h3>
-                        {item.tag && (
-                          <span className="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.6rem] font-bold tracking-wider text-accent-foreground uppercase">
-                            {item.tag}
-                          </span>
-                        )}
-                      </div>
-                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
-                    </div>
-
-                    <div className="shrink-0 pl-1 pr-1 text-right">
-                      <span className="inline-flex items-baseline gap-1 font-display text-lg text-primary">
-                        {item.price} <Riyal className="text-sm" />
-                      </span>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
+              {/* Gradual blur + view full menu */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40">
+                <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent,black_65%)]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cream/70 to-cream" />
+                <div className="absolute inset-x-0 bottom-3 flex justify-center">
+                  <Link
+                    to="/menu"
+                    className="group pointer-events-auto inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
+                  >
+                    View full menu
+                    <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
