@@ -484,13 +484,15 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Visit us</p>
-              <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">Three branches, one flat top</h2>
+              <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">
+                Hungry right <span className="text-primary">now?</span>
+              </h2>
             </Reveal>
 
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
+            <div className="mt-12 grid items-start gap-5 md:grid-cols-3">
               {BRANCHES.map((b, i) => (
                 <Reveal key={b.city} delay={i * 120}>
-                  <div className="group flex h-full flex-col rounded-3xl border border-border p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft">
+                  <div className="group flex flex-col rounded-3xl border border-border p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary/40 hover:shadow-soft">
                     <h3 className="font-display text-2xl text-ink">{b.city}</h3>
                     <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
@@ -513,22 +515,42 @@ function Index() {
                         <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
                       </a>
                     ) : null}
-                    <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                      <span className="font-semibold text-ink">Order online:</span>
-                      <a
-                        href={b.hunger}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center rounded-full border border-primary/30 bg-accent px-3 py-1 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-                      >
-                        HungerStation
-                      </a>
+                    <div className="mt-4">
+                      <span className="text-sm font-semibold text-ink">Order online:</span>
+                      <div className="mt-2 flex flex-wrap items-center gap-2">
+                        <a
+                          href={b.hunger}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-2xl border border-border bg-background py-1 pr-2.5 pl-1 text-xs font-bold text-ink transition-all duration-300 hover:border-primary/40 hover:text-primary hover:shadow-soft"
+                        >
+                          <img
+                            src={hungerLogo.url}
+                            alt="HungerStation"
+                            width={40}
+                            height={40}
+                            loading="lazy"
+                            className="size-5 rounded-lg"
+                          />
+                          HungerStation
+                          <ArrowUpRight className="size-3.5 opacity-70" />
+                        </a>
+                        <a
+                          href={FLP_ONLINE}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-2xl border border-primary/30 bg-accent px-2.5 py-1.5 text-xs font-bold text-primary transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                        >
+                          FLP online
+                          <ArrowUpRight className="size-3.5 opacity-70" />
+                        </a>
+                      </div>
                     </div>
                     <a
                       href={b.map}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
+                      className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-accent-foreground transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
                     >
                       Get directions <ArrowRight className="size-4" />
                     </a>
@@ -536,31 +558,6 @@ function Index() {
                 </Reveal>
               ))}
             </div>
-
-            <Reveal delay={200}>
-              <div className="mt-14 overflow-hidden rounded-4xl bg-primary px-8 py-14 text-center text-primary-foreground">
-                <h2 className="font-display text-4xl sm:text-5xl">Hungry right now?</h2>
-                <p className="mx-auto mt-4 max-w-lg text-base opacity-90">
-                  Order for delivery or pick-up, or call the nearest branch and we'll have it ready.
-                </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-3">
-                  <a
-                    href="https://linktr.ee/flp.burger"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full bg-background px-7 py-3.5 text-base font-bold text-primary transition-transform duration-300 hover:scale-105"
-                  >
-                    Order online
-                  </a>
-                  <a
-                    href="tel:+966597115868"
-                    className="rounded-full border border-primary-foreground/60 px-7 py-3.5 text-base font-bold transition-colors duration-300 hover:bg-primary-foreground hover:text-primary"
-                  >
-                    Call us
-                  </a>
-                </div>
-              </div>
-            </Reveal>
           </div>
         </section>
       </main>
