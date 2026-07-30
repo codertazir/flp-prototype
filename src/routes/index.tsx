@@ -288,7 +288,10 @@ function Index() {
               <a
                 key={n.href}
                 href={n.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:bg-accent hover:text-primary"
+                onClick={(e) => goTo(e, n.href)}
+                className={`rounded-full px-4 py-2 font-display text-xs tracking-wide uppercase transition-all duration-300 hover:text-primary ${
+                  active === n.href ? "text-primary" : "text-ink"
+                }`}
               >
                 {n.label}
               </a>
@@ -307,10 +310,27 @@ function Index() {
             <button
               type="button"
               aria-label="Toggle menu"
+              aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-background/70 transition-colors hover:bg-accent md:hidden"
+              className="relative inline-flex size-10 items-center justify-center rounded-full border border-border bg-background/70 transition-colors hover:bg-accent md:hidden"
             >
-              {open ? <X className="size-5" /> : <MenuIcon className="size-5" />}
+              <span className="relative block h-4 w-5">
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-ink transition-all duration-300 ease-out ${
+                    open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0.5"
+                  }`}
+                />
+                <span
+                  className={`absolute top-1/2 left-0 block h-0.5 w-5 -translate-y-1/2 rounded-full bg-ink transition-all duration-200 ${
+                    open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 block h-0.5 w-5 rounded-full bg-ink transition-all duration-300 ease-out ${
+                    open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0.5"
+                  }`}
+                />
+              </span>
             </button>
           </div>
         </div>
@@ -321,8 +341,10 @@ function Index() {
               <a
                 key={n.href}
                 href={n.href}
-                onClick={() => setOpen(false)}
-                className="block rounded-2xl px-4 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent hover:text-primary"
+                onClick={(e) => goTo(e, n.href)}
+                className={`block rounded-2xl px-4 py-3 font-display text-sm tracking-wide uppercase transition-colors hover:bg-accent hover:text-primary ${
+                  active === n.href ? "text-primary" : "text-ink"
+                }`}
               >
                 {n.label}
               </a>
