@@ -215,6 +215,8 @@ function Index() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [heroIdx, setHeroIdx] = useState(0);
+  const [active, setActive] = useState("");
   const items = cat === "All" ? MENU : MENU.filter((i) => i.cat === cat);
 
   useEffect(() => {
@@ -223,6 +225,35 @@ function Index() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const id = window.setInterval(() => setHeroIdx((v) => (v + 1) % HERO_IMAGES.length), 5000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const sections = NAV.map((n) => document.querySelector(n.href)).filter(Boolean) as Element[];
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(`#${visible.target.id}`);
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.25, 0.5, 1] },
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  const goTo = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    const el = document.querySelector(href);
+    if (!el) return;
+    e.preventDefault();
+    setOpen(false);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", href);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
