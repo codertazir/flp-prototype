@@ -182,18 +182,24 @@ const WHY = [
 const BRANCHES = [
   {
     city: "Jubail",
-    address: "Al Fayhaa, Al Dafi — Jubail 35811",
-    map: "https://maps.app.goo.gl/y6gakeGN2dEkSUhH8",
+    address: "Al Fayhaa District, Al Dafi — Jubail 35811",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/Fzw14kEaQugvMLWa8",
   },
   {
     city: "Dammam",
-    address: "Now serving — see Instagram for directions",
-    map: "https://www.google.com/maps/search/FLP+burger+Dammam",
+    address: "Al Shatea District — Dammam",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/M2h9YW48mR8QYVDZA",
   },
   {
     city: "Al-Baha",
-    address: "Now serving — see Instagram for directions",
-    map: "https://www.google.com/maps/search/FLP+burger+Al+Baha",
+    address: "King Fahd Road — Al-Baha",
+    phone: "+966 59 711 5868",
+    tel: "+966597115868",
+    map: "https://maps.app.goo.gl/vipgLJvHEU92eFhM9",
   },
 ];
 
@@ -526,10 +532,10 @@ function Index() {
                       <MapPin className="mt-0.5 size-4 shrink-0 text-primary" /> {b.address}
                     </p>
                     <a
-                      href="tel:+966597115868"
+                      href={`tel:${b.tel}`}
                       className="mt-2 flex items-center gap-2 text-sm font-semibold text-ink transition-colors hover:text-primary"
                     >
-                      <Phone className="size-4 shrink-0 text-primary" /> +966 59 711 5868
+                      <Phone className="size-4 shrink-0 text-primary" /> {b.phone}
                     </a>
                     <a
                       href={b.map}
