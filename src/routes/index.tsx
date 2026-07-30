@@ -301,7 +301,7 @@ function Index() {
 
       {/* Install app modal */}
       <div
-        className={`fixed inset-0 z-[60] flex items-end justify-center p-4 transition-opacity duration-300 sm:items-center ${
+        className={`fixed inset-0 z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ${
           appOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         role="dialog"
@@ -403,13 +403,6 @@ function Index() {
                 >
                   <Instagram className="size-4" /> @flp.burger
                 </a>
-                <a
-                  href="#visit"
-                  onClick={(e) => goTo(e, "#visit")}
-                  className="inline-flex items-center gap-2 rounded-full border border-background/40 px-7 py-3.5 text-base font-bold text-background transition-all duration-300 hover:bg-background hover:text-ink"
-                >
-                  Order now
-                </a>
               </div>
             </Reveal>
           </div>
@@ -483,8 +476,9 @@ function Index() {
           <div className="mx-auto max-w-5xl px-5 py-20 lg:py-28">
             <Reveal>
               <p className="text-[0.7rem] font-bold tracking-[0.3em] text-primary uppercase">Why FLP</p>
-              <h2 className="mt-3 font-display text-3xl whitespace-nowrap text-ink sm:text-4xl lg:text-5xl">
-                Simple food, done properly
+              <h2 className="mt-3 font-display text-3xl text-ink sm:text-4xl lg:whitespace-nowrap lg:text-5xl">
+                Simple food,
+                <br className="sm:hidden" /> done properly
               </h2>
             </Reveal>
 
@@ -673,9 +667,21 @@ function Index() {
                 </a>
                 <span className="block text-xs">Jubail branch</span>
               </li>
-              <li>Jubail — Al Fayhaa, Al Dafi 35811</li>
-              <li>Dammam — Al Shatea District</li>
-              <li>Al-Baha — King Fahd Road</li>
+              {BRANCHES.map((b) => (
+                <li key={b.city}>
+                  <a
+                    href={b.map}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-start gap-1.5 transition-colors hover:text-primary"
+                  >
+                    <MapPin className="mt-0.5 size-3.5 shrink-0 text-primary" />
+                    <span>
+                      {b.city} — {b.address.replace(` — ${b.city}`, "")}
+                    </span>
+                  </a>
+                </li>
+              ))}
               <li>
                 <a
                   href={FLP_ONLINE}

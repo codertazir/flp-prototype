@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
@@ -28,9 +28,31 @@ export const Route = createFileRoute("/menu")({
   }),
 });
 
+function slug(c: string) {
+  return c.toLowerCase();
+}
+
 function MenuPage() {
-  const [cat, setCat] = useState<(typeof CATS)[number]>("All");
-  const items = cat === "All" ? MENU : MENU.filter((i) => i.cat === cat);
+  const [active, setActive] = useState<(typeof CATS)[number]>(CATS[0]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const line = 220;
+      let current: (typeof CATS)[number] = CATS[0];
+      for (const c of CATS) {
+        const el = document.getElementById(slug(c));
+        if (el && el.getBoundingClientRect().top <= line) current = c;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const goTo = (c: (typeof CATS)[number]) => {
+    document.getElementById(slug(c))?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="min-h-screen bg-cream text-foreground">
@@ -62,15 +84,15 @@ function MenuPage() {
           </h1>
         </Reveal>
 
-        <Reveal delay={120}>
-          <div className="mt-8 flex flex-wrap gap-2">
+        <div className="sticky top-[4.75rem] z-40 -mx-5 mt-8 bg-cream/90 px-5 py-3 backdrop-blur-xl sm:top-[5.5rem]">
+          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {CATS.map((c) => (
               <button
                 key={c}
                 type="button"
-                onClick={() => setCat(c)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 ${
-                  cat === c
+                onClick={() => goTo(c)}
+                className={`shrink-0 rounded-full px-6 py-3 font-display text-base tracking-wide transition-all duration-300 ${
+                  active === c
                     ? "bg-primary text-primary-foreground shadow-pop"
                     : "bg-background text-muted-foreground hover:text-primary"
                 }`}
@@ -79,14 +101,25 @@ function MenuPage() {
               </button>
             ))}
           </div>
-        </Reveal>
+        </div>
 
-        <div className="mt-10 grid gap-3 md:grid-cols-2">
-          {items.map((item, i) => (
-            <Reveal key={item.name} delay={Math.min(i, 6) * 60}>
-              <MenuCard item={item} />
-            </Reveal>
-          ))}
+        <div className="mt-6 space-y-12">
+          {CATS.map((c) => {
+            const items = MENU.filter((i) => i.cat === c);
+            if (!items.length) return null;
+            return (
+              <section key={c} id={slug(c)} className="scroll-mt-40">
+                <h2 className="font-display text-2xl text-ink sm:text-3xl">{c}</h2>
+                <div className="mt-5 grid gap-3 md:grid-cols-2">
+                  {items.map((item, i) => (
+                    <Reveal key={item.name} delay={Math.min(i, 6) * 60}>
+                      <MenuCard item={item} />
+                    </Reveal>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       </main>
     </div>
