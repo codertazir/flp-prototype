@@ -9,8 +9,6 @@ import {
   Flame,
   ArrowRight,
   ChevronDown,
-  Menu as MenuIcon,
-  X,
 } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
@@ -667,7 +665,7 @@ function Index() {
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               {NAV.map((n) => (
                 <li key={n.href}>
-                  <a href={n.href} className="transition-colors hover:text-primary">
+                  <a href={n.href} onClick={(e) => goTo(e, n.href)} className="transition-colors hover:text-primary">
                     {n.label}
                   </a>
                 </li>
