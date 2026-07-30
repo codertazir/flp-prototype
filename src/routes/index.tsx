@@ -301,7 +301,7 @@ function Index() {
 
       {/* Install app modal */}
       <div
-        className={`fixed inset-0 z-[60] flex items-end justify-center p-4 transition-opacity duration-300 sm:items-center ${
+        className={`fixed inset-0 z-[60] flex items-center justify-center p-4 transition-opacity duration-300 ${
           appOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         role="dialog"
