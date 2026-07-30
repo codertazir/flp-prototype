@@ -90,4 +90,4 @@ export const MENU: Item[] = [
   },
 ];
 
-export const CATS = ["All", "Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
+export const CATS = ["Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
