@@ -364,15 +364,18 @@ function Index() {
       <main id="top">
         {/* Hero — full screen */}
         <section className="relative flex h-svh min-h-[600px] items-center justify-center overflow-hidden">
-          <img
-            src={heroTray}
-            alt="Tray of FLP smash burgers and fries"
-            className="absolute inset-0 size-full scale-105 object-cover"
-          />
+          {HERO_IMAGES.map((img, i) => (
+            <img
+              key={img.src}
+              src={img.src}
+              alt={img.alt}
+              aria-hidden={i !== heroIdx}
+              className={`hero-fade absolute inset-0 size-full scale-105 object-cover ${
+                i === heroIdx ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
           <div className="absolute inset-0 bg-ink/70" />
-          <div className="absolute -right-24 top-1/4 hidden w-64 overflow-hidden rounded-4xl border-4 border-background/20 float-slow lg:block">
-            <img src={brandSoftserve} alt="FLP soft serve" className="size-full object-cover" />
-          </div>
 
           <div className="relative z-10 mx-auto max-w-3xl px-5 text-center">
             <Reveal delay={80}>
@@ -394,6 +397,7 @@ function Index() {
               <div className="mt-9 flex flex-wrap justify-center gap-3">
                 <a
                   href="#menu"
+                  onClick={(e) => goTo(e, "#menu")}
                   className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground transition-all duration-300 hover:shadow-pop hover:brightness-105"
                 >
                   See the menu
@@ -414,6 +418,7 @@ function Index() {
           {/* Subtle scroll cue */}
           <a
             href="#menu"
+            onClick={(e) => goTo(e, "#menu")}
             className="absolute inset-x-0 bottom-7 z-10 mx-auto flex w-fit flex-col items-center gap-1.5 text-background/70 transition-colors hover:text-background"
           >
             <span className="text-[0.65rem] font-semibold tracking-[0.35em] uppercase">Scroll</span>
@@ -423,9 +428,9 @@ function Index() {
 
         {/* Marquee */}
         <div className="overflow-hidden border-y border-border bg-primary py-2.5 text-primary-foreground">
-          <div className="marquee-track flex w-max gap-8 whitespace-nowrap font-display text-sm tracking-[0.2em] uppercase">
+          <div className="marquee-track flex w-max gap-20 whitespace-nowrap font-display text-sm tracking-[0.2em] uppercase">
             {Array.from({ length: 8 }).map((_, i) => (
-              <span key={i} className="flex items-center gap-8">
+              <span key={i} className="flex items-center gap-20">
                 Flip your mood <span className="opacity-50">●</span> Fresh beef daily{" "}
                 <span className="opacity-50">●</span> Open till 3 AM <span className="opacity-50">●</span>
               </span>
