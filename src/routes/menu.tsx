@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
@@ -34,6 +34,8 @@ function slug(c: string) {
 
 function MenuPage() {
   const [active, setActive] = useState<(typeof CATS)[number]>(CATS[0]);
+  const [stuck, setStuck] = useState(false);
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -44,10 +46,21 @@ function MenuPage() {
         if (el && el.getBoundingClientRect().top <= line) current = c;
       }
       setActive(current);
+
+      const el = tabsRef.current;
+      if (el) {
+        const top = el.getBoundingClientRect().top;
+        const sticky = window.innerWidth >= 640 ? 88 : 76;
+        setStuck(top <= sticky + 1);
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const goTo = (c: (typeof CATS)[number]) => {
@@ -58,8 +71,11 @@ function MenuPage() {
     <div className="min-h-screen bg-cream text-foreground">
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-44 backdrop-blur-lg [mask-image:linear-gradient(to_bottom,black_55%,transparent)] sm:h-52"
+        className={`pointer-events-none fixed inset-x-0 top-0 z-40 backdrop-blur-lg transition-[height] duration-500 ease-out [mask-image:linear-gradient(to_bottom,black_55%,transparent)] ${
+          stuck ? "h-56 sm:h-64" : "h-24 sm:h-28"
+        }`}
       />
+
 
       <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-5 sm:px-5">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full border border-border bg-background/80 px-3 py-2 shadow-soft backdrop-blur-xl sm:px-4">
@@ -89,7 +105,7 @@ function MenuPage() {
           </h1>
         </Reveal>
 
-        <div className="sticky top-[4.75rem] z-40 -mx-5 mt-8 px-5 py-3 sm:top-[5.5rem]">
+        <div ref={tabsRef} className="sticky top-[4.75rem] z-40 -mx-5 mt-8 px-5 py-3 sm:top-[5.5rem]">
           <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {CATS.map((c) => (
               <button

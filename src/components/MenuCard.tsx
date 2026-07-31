@@ -17,7 +17,7 @@ export function Riyal({ className = "" }: { className?: string }) {
 
 export function MenuCard({ item }: { item: Item }) {
   return (
-    <article className="group flex items-center gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
+    <article className="group flex items-start gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
       <div className="size-20 shrink-0 overflow-hidden rounded-xl sm:size-24">
         <img
           src={item.img}
@@ -30,15 +30,15 @@ export function MenuCard({ item }: { item: Item }) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <h3 className="truncate font-display text-base text-ink">{item.name}</h3>
+        <div className="flex flex-wrap items-center gap-2">
+          <h3 className="font-display text-base text-ink">{item.name}</h3>
           {item.tag && (
             <span className="shrink-0 rounded-full bg-accent px-2 py-0.5 text-[0.6rem] font-bold tracking-wider text-accent-foreground uppercase">
               {item.tag}
             </span>
           )}
         </div>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+        <p className="mt-1 text-xs leading-relaxed text-balance text-muted-foreground">{item.desc}</p>
         {item.cal != null && (
           <p className="mt-1 text-[0.65rem] font-bold tracking-wider text-muted-foreground/80 uppercase">
             {item.cal} Cal
