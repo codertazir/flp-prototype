@@ -6,88 +6,175 @@ import menuClassic from "@/assets/menu-classic.jpg";
 import menuChicken from "@/assets/menu-chicken.jpg";
 import menuFries from "@/assets/menu-fries.jpg";
 
+export const CATS = ["Beef Burger", "Chicken Burger", "Sides", "Sauce", "Drinks"] as const;
+
+export type Cat = (typeof CATS)[number];
+
 export type Item = {
   name: string;
   desc: string;
   price: number;
-  cat: "Burgers" | "Sandos" | "Sides" | "Drinks" | "Sweet";
+  cat: Cat;
   img: string;
+  cal?: number;
   tag?: string;
 };
 
 export const MENU: Item[] = [
   {
     name: "FLP Burger",
-    desc: "Sesame bun, seared beef patty, cheddar, pickles and the FLP sauce.",
-    price: 28,
-    cat: "Burgers",
+    desc: "120 grams of premium black angus beef, caramelized onions, yellow cheddar cheese, smoked flip sauce.",
+    price: 25,
+    cal: 403,
+    cat: "Beef Burger",
     img: menuClassic,
     tag: "Best seller",
   },
   {
-    name: "Double Flip",
-    desc: "Two smashed patties, double cheese, caramelised onion.",
-    price: 38,
-    cat: "Burgers",
+    name: "Mush Burger",
+    desc: "120 grams of premium black angus beef, crispy onion, white cheddar cheese, white mushroom sauce.",
+    price: 25,
+    cal: 440,
+    cat: "Beef Burger",
     img: heroTray,
   },
   {
-    name: "Crispy Chicken",
-    desc: "Buttermilk-crisp chicken thigh, lettuce and creamy garlic sauce.",
+    name: "Philly Steak",
+    desc: "Brioche bun, meat, 2 slices of cheese, brown onions and smoked sauce.",
+    price: 27,
+    cat: "Beef Burger",
+    img: brandSando,
+  },
+  {
+    name: "FLP Smash",
+    desc: "Two smash black angus steaks with jalapeño bacon jam, American cheese, pickles, and special sauce.",
     price: 26,
-    cat: "Burgers",
+    cat: "Beef Burger",
+    img: menuClassic,
+  },
+  {
+    name: "Check N FLP",
+    desc: "Crispy chicken, dipped in special sauce, yellow cheddar cheese, lettuce, slaw salad.",
+    price: 26,
+    cal: 592,
+    cat: "Chicken Burger",
     img: menuChicken,
   },
   {
-    name: "Crispy Sando",
-    desc: "Long sesame roll packed with crunchy chicken and spicy mayo.",
-    price: 26,
-    cat: "Sandos",
-    img: brandSando,
-  },
-  {
-    name: "Beef Sando",
-    desc: "Thin sliced beef, melted cheese and pickled jalapeño.",
-    price: 29,
-    cat: "Sandos",
-    img: brandSando,
+    name: "Classic Chicken",
+    desc: "Crispy chicken, classic sauce, white cheddar cheese, slaw salad.",
+    price: 25,
+    cal: 488,
+    cat: "Chicken Burger",
+    img: menuChicken,
   },
   {
     name: "FLP Fries",
-    desc: "Golden fries in the orange carton, dusted with FLP seasoning.",
-    price: 12,
+    desc: "Flip fries with crust, our special sauce, flip special toppings, jalapeño.",
+    price: 14,
+    cal: 377,
     cat: "Sides",
     img: menuFries,
   },
   {
-    name: "Cheesy Fries",
-    desc: "Fries loaded with molten cheese sauce and crispy onion.",
+    name: "Fries",
+    desc: "Fries with crust.",
+    price: 9,
+    cat: "Sides",
+    img: menuFries,
+  },
+  {
+    name: "Crisper",
+    desc: "Light slice wedges.",
+    price: 9,
+    cat: "Sides",
+    img: menuFries,
+  },
+  {
+    name: "Chicken Bites",
+    desc: "Chicken bites dipped special sauce.",
+    price: 15,
+    cat: "Sides",
+    img: menuChicken,
+  },
+  {
+    name: "Chicken Wings",
+    desc: "Marinated chicken wings fried in flip's special way.",
     price: 18,
+    cal: 335,
+    cat: "Sides",
+    img: menuChicken,
+  },
+  {
+    name: "FLP Strips",
+    desc: "Chicken strips with flip special seasoning with flip special sauce.",
+    price: 15,
+    cal: 333,
+    cat: "Sides",
+    img: brandSando,
+  },
+  {
+    name: "Mush Balls",
+    desc: "Fresh mushrooms, parmesan and mozzarella cheese mix with red bell peppers.",
+    price: 15,
+    cal: 180,
     cat: "Sides",
     img: menuFries,
   },
   {
-    name: "FLP Cooler",
-    desc: "Ice-cold citrus cooler served in the orange cup you already know.",
-    price: 12,
+    name: "Smoky Sauce",
+    desc: "Smoky sauce.",
+    price: 3,
+    cat: "Sauce",
+    img: brandSoftserve,
+  },
+  {
+    name: "FLP Sauce",
+    desc: "FLP sauce.",
+    price: 3,
+    cat: "Sauce",
+    img: brandSoftserve,
+  },
+  {
+    name: "White Sauce",
+    desc: "White sauce.",
+    price: 3,
+    cat: "Sauce",
+    img: brandSoftserve,
+  },
+  {
+    name: "Fanta Can",
+    desc: "Fanta can.",
+    price: 5,
     cat: "Drinks",
     img: brandCup,
   },
   {
-    name: "Soft Serve",
-    desc: "Swirled mango-orange soft serve, straight from the machine.",
-    price: 14,
-    cat: "Sweet",
-    img: brandSoftserve,
-    tag: "New",
+    name: "Cola 320 ml",
+    desc: "Cola 320 ml.",
+    price: 5,
+    cat: "Drinks",
+    img: brandCup,
   },
   {
-    name: "Shake",
-    desc: "Thick vanilla or chocolate shake, blended to order.",
-    price: 19,
-    cat: "Sweet",
+    name: "Cola Diet 320 ml",
+    desc: "Cola diet 320 ml.",
+    price: 5,
+    cat: "Drinks",
+    img: brandCup,
+  },
+  {
+    name: "Sprite 320 ml",
+    desc: "Sprite 320 ml.",
+    price: 5,
+    cat: "Drinks",
+    img: brandCup,
+  },
+  {
+    name: "Water",
+    desc: "Arwa water.",
+    price: 1,
+    cat: "Drinks",
     img: brandCup,
   },
 ];
-
-export const CATS = ["Burgers", "Sandos", "Sides", "Drinks", "Sweet"] as const;
