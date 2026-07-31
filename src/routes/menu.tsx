@@ -72,7 +72,7 @@ function MenuPage() {
       <div
         aria-hidden
         className={`pointer-events-none fixed inset-x-0 top-0 z-40 backdrop-blur-lg transition-[height] duration-500 ease-out [mask-image:linear-gradient(to_bottom,black_55%,transparent)] ${
-          stuck ? "h-56 sm:h-64" : "h-24 sm:h-28"
+          stuck ? "h-40 sm:h-44" : "h-24 sm:h-28"
         }`}
       />
 
