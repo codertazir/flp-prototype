@@ -56,6 +56,11 @@ function MenuPage() {
 
   return (
     <div className="min-h-screen bg-cream text-foreground">
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-44 backdrop-blur-lg [mask-image:linear-gradient(to_bottom,black_55%,transparent)] sm:h-52"
+      />
+
       <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-5 sm:px-5">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full border border-border bg-background/80 px-3 py-2 shadow-soft backdrop-blur-xl sm:px-4">
           <Link to="/" className="flex items-center gap-2.5">
@@ -84,7 +89,7 @@ function MenuPage() {
           </h1>
         </Reveal>
 
-        <div className="sticky top-[4.75rem] z-40 -mx-5 mt-8 bg-cream/90 px-5 py-3 backdrop-blur-xl sm:top-[5.5rem]">
+        <div className="sticky top-[4.75rem] z-40 -mx-5 mt-8 px-5 py-3 sm:top-[5.5rem]">
           <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {CATS.map((c) => (
               <button
@@ -94,7 +99,7 @@ function MenuPage() {
                 className={`shrink-0 rounded-full px-6 py-3 font-display text-base tracking-wide transition-all duration-300 ${
                   active === c
                     ? "bg-primary text-primary-foreground shadow-pop"
-                    : "bg-background text-muted-foreground hover:text-primary"
+                    : "bg-background/70 text-muted-foreground backdrop-blur-sm hover:text-primary"
                 }`}
               >
                 {c}
@@ -102,6 +107,7 @@ function MenuPage() {
             ))}
           </div>
         </div>
+
 
         <div className="mt-6 space-y-12">
           {CATS.map((c) => {
