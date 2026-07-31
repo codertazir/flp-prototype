@@ -39,12 +39,18 @@ export function MenuCard({ item }: { item: Item }) {
           )}
         </div>
         <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+        {item.cal != null && (
+          <p className="mt-1 text-[0.65rem] font-bold tracking-wider text-muted-foreground/80 uppercase">
+            {item.cal} Cal
+          </p>
+        )}
       </div>
 
       <div className="shrink-0 px-1 text-right">
         <span className="inline-flex items-baseline gap-1 font-display text-lg text-primary">
-          {item.price} <Riyal className="text-sm" />
+          {item.price.toFixed(2)} <Riyal className="text-sm" />
         </span>
+
       </div>
     </article>
   );
