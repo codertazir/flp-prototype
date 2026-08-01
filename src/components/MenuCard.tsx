@@ -17,8 +17,8 @@ export function Riyal({ className = "" }: { className?: string }) {
 
 export function MenuCard({ item }: { item: Item }) {
   return (
-    <article className="group flex items-start gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
-      <div className="size-20 shrink-0 overflow-hidden rounded-xl sm:size-24">
+    <article className="group flex items-center gap-4 rounded-2xl bg-card p-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
+      <div className="size-20 shrink-0 self-center overflow-hidden rounded-xl sm:size-24">
         <img
           src={item.img}
           alt={item.name}
@@ -29,7 +29,7 @@ export function MenuCard({ item }: { item: Item }) {
         />
       </div>
 
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 self-center">
         <div className="flex flex-wrap items-center gap-2">
           <h3 className="font-display text-base text-ink">{item.name}</h3>
           {item.tag && (
@@ -46,7 +46,8 @@ export function MenuCard({ item }: { item: Item }) {
         )}
       </div>
 
-      <div className="shrink-0 px-1 text-right">
+      <div className="shrink-0 self-center px-1 text-right">
+
         <span className="inline-flex items-baseline gap-1 font-display text-lg text-primary">
           {item.price.toFixed(2)} <Riyal className="text-sm" />
         </span>
