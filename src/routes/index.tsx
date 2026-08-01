@@ -32,16 +32,16 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "FLP — Flip Your Mood | Smash Burgers in Jubail" },
+      { title: "فلب FLP — Flip Your Mood" },
       {
         name: "description",
         content:
           "FLP serves smash burgers, crispy chicken sandos, loaded fries and soft serve in Jubail, Dammam and Al-Baha. Open daily until 3 AM.",
       },
-      { property: "og:title", content: "FLP — Flip Your Mood" },
+      { property: "og:title", content: "فلب FLP — Flip Your Mood" },
       {
         property: "og:description",
-        content: "Smash burgers, crispy sandos and soft serve. Open daily until 3 AM.",
+        content: "Smash burgers, sides, and drinks. Open daily until 3 AM.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
