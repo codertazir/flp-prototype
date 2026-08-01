@@ -18,7 +18,7 @@ import { Reveal } from "@/components/Reveal";
 import { MenuCard } from "@/components/MenuCard";
 import { Footer } from "@/components/Footer";
 import { MENU } from "@/data/menu";
-import hungerLogo from "@/assets/hungerstation.png.asset.json";
+import hungerLogo from "@/assets/hungerstation.png";
 import flpLogo from "@/assets/flp-logo.png";
 import heroTray from "@/assets/hero-tray.jpg";
 import brandCup from "@/assets/brand-cup.jpg";
@@ -590,7 +590,7 @@ function Index() {
                           className="inline-flex items-center gap-1.5 rounded-2xl border border-border bg-background py-1 pr-2.5 pl-1 text-xs font-bold text-ink transition-all duration-300 hover:border-primary/40 hover:text-primary hover:shadow-soft"
                         >
                           <img
-                            src={hungerLogo.url}
+                            src={hungerLogo}
                             alt="HungerStation"
                             width={40}
                             height={40}
