@@ -23,7 +23,16 @@ const BRANCHES = [
 const FLP_ONLINE = "https://flp.tryorder.net/en/menu";
 
 const EXPLORE = [
-  { href: "/", label: "Home" },
+  {
+    href: "/",
+    label: "Home",
+    sub: [
+      { href: "/#menu", label: "Menu" },
+      { href: "/#why", label: "Why FLP" },
+      { href: "/#story", label: "Our Story" },
+      { href: "/#visit", label: "Visit Us" },
+    ],
+  },
   { href: "/menu", label: "Full menu" },
 ];
 
@@ -62,6 +71,17 @@ export function Footer() {
                 <Link to={n.href} className="transition-colors hover:text-primary">
                   {n.label}
                 </Link>
+                {n.sub && (
+                  <ul className="mt-1.5 ml-3 space-y-1 border-l border-border pl-3">
+                    {n.sub.map((s) => (
+                      <li key={s.href}>
+                        <Link to={s.href} className="transition-colors hover:text-primary">
+                          {s.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
