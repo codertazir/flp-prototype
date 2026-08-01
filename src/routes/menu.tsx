@@ -135,7 +135,6 @@ function MenuPage() {
                 type="button"
                 data-cat={c}
                 onClick={() => goTo(c)}
-
                 className={`shrink-0 rounded-full px-6 py-3 font-display text-base tracking-wide transition-all duration-300 ${
                   active === c
                     ? "bg-primary text-primary-foreground shadow-pop"
