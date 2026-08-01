@@ -23,7 +23,16 @@ const BRANCHES = [
 const FLP_ONLINE = "https://flp.tryorder.net/en/menu";
 
 const EXPLORE = [
-  { href: "/", label: "Home" },
+  {
+    href: "/",
+    label: "Home",
+    sub: [
+      { href: "/#menu", label: "Menu" },
+      { href: "/#why", label: "Why FLP" },
+      { href: "/#story", label: "Our Story" },
+      { href: "/#visit", label: "Visit Us" },
+    ],
+  },
   { href: "/menu", label: "Full menu" },
 ];
 
