@@ -16,6 +16,7 @@ import {
 
 import { Reveal } from "@/components/Reveal";
 import { MenuCard } from "@/components/MenuCard";
+import { Footer } from "@/components/Footer";
 import { MENU } from "@/data/menu";
 import hungerLogo from "@/assets/hungerstation.png.asset.json";
 import flpLogo from "@/assets/flp-logo.png";
