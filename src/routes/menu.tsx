@@ -125,12 +125,17 @@ function MenuPage() {
         </Reveal>
 
         <div ref={tabsRef} className="sticky top-[4.75rem] z-40 -mx-5 mt-8 px-5 py-3 sm:top-[5.5rem]">
-          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div
+            ref={scrollerRef}
+            className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             {CATS.map((c) => (
               <button
                 key={c}
                 type="button"
+                data-cat={c}
                 onClick={() => goTo(c)}
+
                 className={`shrink-0 rounded-full px-6 py-3 font-display text-base tracking-wide transition-all duration-300 ${
                   active === c
                     ? "bg-primary text-primary-foreground shadow-pop"
