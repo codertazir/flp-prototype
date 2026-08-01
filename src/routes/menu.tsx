@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { Reveal } from "@/components/Reveal";
 import { MenuCard } from "@/components/MenuCard";
+import { Footer } from "@/components/Footer";
 import { MENU, CATS } from "@/data/menu";
 import flpLogo from "@/assets/flp-logo.png";
 
@@ -167,6 +168,8 @@ function MenuPage() {
           })}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
