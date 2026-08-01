@@ -12,16 +12,16 @@ export const Route = createFileRoute("/menu")({
   component: MenuPage,
   head: () => ({
     meta: [
-      { title: "Full Menu — FLP Smash Burgers, Sandos & Soft Serve" },
+      { title: "Full Menu — فلب FLP" },
       {
         name: "description",
         content:
-          "Browse the full FLP menu: smash burgers, crispy chicken sandos, loaded fries, coolers and soft serve, with prices in SAR.",
+          "Browse the full FLP menu: smash burgers, sides, and drinks, with prices in SAR.",
       },
-      { property: "og:title", content: "Full Menu — FLP" },
+      { property: "og:title", content: "Full Menu — فلب FLP" },
       {
         property: "og:description",
-        content: "Every FLP burger, sando, side, drink and dessert with prices.",
+        content: "Every FLP burger, sides, and drinks with prices.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
