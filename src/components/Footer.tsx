@@ -71,6 +71,17 @@ export function Footer() {
                 <Link to={n.href} className="transition-colors hover:text-primary">
                   {n.label}
                 </Link>
+                {n.sub && (
+                  <ul className="mt-1.5 ml-3 space-y-1 border-l border-border pl-3">
+                    {n.sub.map((s) => (
+                      <li key={s.href}>
+                        <Link to={s.href} className="transition-colors hover:text-primary">
+                          {s.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
