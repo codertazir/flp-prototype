@@ -168,6 +168,8 @@ function MenuPage() {
           })}
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
