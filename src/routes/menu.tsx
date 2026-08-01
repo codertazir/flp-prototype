@@ -36,6 +36,7 @@ function MenuPage() {
   const [active, setActive] = useState<(typeof CATS)[number]>(CATS[0]);
   const [stuck, setStuck] = useState(false);
   const tabsRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -63,9 +64,27 @@ function MenuPage() {
     };
   }, []);
 
+  // Keep the active category tab visible inside the horizontal tab strip.
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const btn = scroller?.querySelector<HTMLElement>(`[data-cat="${active}"]`);
+    if (!scroller || !btn) return;
+    const sLeft = scroller.scrollLeft;
+    const sRight = sLeft + scroller.clientWidth;
+    const bLeft = btn.offsetLeft;
+    const bRight = bLeft + btn.offsetWidth;
+    const pad = 16;
+    if (bLeft < sLeft + pad) {
+      scroller.scrollTo({ left: Math.max(0, bLeft - pad), behavior: "smooth" });
+    } else if (bRight > sRight - pad) {
+      scroller.scrollTo({ left: bRight - scroller.clientWidth + pad, behavior: "smooth" });
+    }
+  }, [active]);
+
   const goTo = (c: (typeof CATS)[number]) => {
     document.getElementById(slug(c))?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
 
   return (
     <div className="min-h-screen bg-cream text-foreground">
